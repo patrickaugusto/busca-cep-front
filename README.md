@@ -1,11 +1,9 @@
 # Projeto Busca CEP
 
-Este projeto é uma aplicação web para consultar endereços a partir do CEP utilizando a API do **ViaCEP**. A aplicação front-end foi construída com **React** e realiza requisições para uma API, construida com **Java SpringBoot**, na nuvem que retorna os dados do endereço.
+Este projeto é uma aplicação web para consultar endereços a partir do CEP utilizando a API do **ViaCEP**. A aplicação front-end foi construída com **React** e realiza requisições para uma API, construida com **Java Spring Boot**, na nuvem que retorna os dados do endereço.
 
 ## API do Back-End
-```bash
-https://busca-cep-production-8cfa.up.railway.app/consultar-cep/{cep}
-```
+- [repositorio do back-end](https://github.com/patrickaugusto/busca-cep)
 
 ## Funcionalidades
 
