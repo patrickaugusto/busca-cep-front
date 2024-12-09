@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import "./cepForm.css";
 
 function CepForm() {
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -18,7 +20,9 @@ function CepForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const rawCep = cep.replace(/\D/g, ""); 
+    const rawCep = cep.replace(/\D/g, "");
+
+    setLoading(true);
 
     try {
       setError(null);
@@ -36,17 +40,16 @@ function CepForm() {
       setAddress(data);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "300px", margin: "0 auto", padding: "20px" }}>
-      <h2>Consultar CEP</h2>
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label htmlFor="cep" style={{ display: "block", marginBottom: "5px" }}>
-            CEP:
-          </label>
+        <div className="form-group">
+          <label htmlFor="cep">CEP:</label>
           <input
             type="text"
             id="cep"
@@ -55,38 +58,24 @@ function CepForm() {
             onChange={handleChange}
             placeholder="Ex: 12345-678"
             maxLength={9}
-            style={{
-              width: "100%",
-              padding: "8px",
-              boxSizing: "border-box",
-            }}
             required
           />
         </div>
 
-        <button
-          type="submit"
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Consultar
-        </button>
+        <button type="submit" disabled={loading}>Consultar</button>
       </form>
+
+      {/* Tela de carregamento */}
+      {loading && <div className="loading">Carregando...</div>}
 
       {/* Exibir resultado ou erros */}
       {error && (
-        <div style={{ marginTop: "15px", color: "red" }}>
+        <div className="error-message">
           <strong>Erro:</strong> {error}
         </div>
       )}
       {address && (
-        <div style={{ marginTop: "15px", textAlign: "start" }}>
+        <div className="address-info">
           <h3>Endereço Encontrado:</h3>
           <p><strong>Logradouro:</strong> {address.logradouro}</p>
           <p><strong>Bairro:</strong> {address.bairro}</p>
